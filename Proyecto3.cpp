@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <unordered_set>
 #include <random>
+#include <stack>
 #include <vector>
 
 using namespace std;
@@ -132,7 +133,7 @@ void merge(int Numero[], int left, int mid, int right) {
 
 //
 //
-int* mergeSort(int arr[], int left, int right) {
+void mergeSort(int arr[], int left, int right) {
     if (left < right) {
         int mid = left + (right - left) / 2;
 
@@ -140,16 +141,15 @@ int* mergeSort(int arr[], int left, int right) {
         mergeSort(arr, mid + 1, right);
 
         merge(arr, left, mid, right);
-
-        return arr;
     }
 }
-int partition(int inArray[], int low, int high){
-    int i = low-1;
+
+int partition(int inArray[], int low, int high) {
+    int i = low - 1;
     int pivot = inArray[high];
 
-    for (int j=low; j < high; j++){
-        if (inArray[j] <= pivot){
+    for (int j = low; j < high; j++) {
+        if (inArray[j] <= pivot) {
             i++;
             int temp = inArray[i];
             inArray[i] = inArray[j];
@@ -157,24 +157,35 @@ int partition(int inArray[], int low, int high){
         }
     }
 
-    int temp = inArray[i+1];
-    inArray[i+1] = inArray[high];
+    int temp = inArray[i + 1];
+    inArray[i + 1] = inArray[high];
     inArray[high] = temp;
 
-    return i+1;
+    return i + 1;
 }
 
-//
-//
-//- quickSort(array, 0, size-1)
-void quickSort(int inArray[], int low, int high){
-    if (low < high){
-        //divide el array y obtiene un pivote
-        int pivot_index = partition(inArray, low, high);
+void quickSortIterative(int arr[], int low, int high) {
+    stack<int> s;
+    s.push(low);
+    s.push(high);
 
-        //ordena recursivamente los subarreglos de antes y despues del pivote
-        quickSort(inArray, low, pivot_index-1);
-        quickSort(inArray, pivot_index+1, high);
+    while (!s.empty()) {
+        high = s.top();
+        s.pop();
+        low = s.top();
+        s.pop();
+
+        int pivotIndex = partition(arr, low, high);
+
+        if (pivotIndex - 1 > low) {
+            s.push(low);
+            s.push(pivotIndex - 1);
+        }
+
+        if (pivotIndex + 1 < high) {
+            s.push(pivotIndex + 1);
+            s.push(high);
+        }
     }
 }
 
@@ -220,38 +231,77 @@ void copyArray(const int source[], int destination[], int size) {
         destination[i] = source[i];
     }
 }
+
 int main()
 { 
-    
     srand((time(NULL)));
     int loopead = 1;
     int select, Change, loop;
     int limiteIntervalo = 0;
-    cout << "Seleccione tamanio del arreglo: ";
+    int i,j,aux;
+    do{
+
+    cout << "Seleccione tipo de carrera: \n1) Cola de espera (100.000 a 120.000)\n2) Trazabilidad de objetos (15.000 a 22.500)\n3) Eventos de cada escenario (60.000 a 80.000)\n4) Salir.";
     cin >> Change;
     if (Change == 1)
     {
+        cout << "Selecciono Cola de espera." << endl;
         limiteIntervalo = rand()%(110000 - 100000 + 1) + 100000;
     }
     else if(Change == 2){
+        cout << "Selecciono Trazabilidad de objetos." << endl;        
         limiteIntervalo = rand()%(22501 - 15000) + 15000;
     }
     else if (Change == 3){
+        cout << "Selecciono Eventos de cada escenario." << endl;        
         limiteIntervalo = rand()%(80001 - 60000) + 60000;
+    }else if(Change == 4)
+    {
+        cout << "Adios!";
+        return 0;
     }else {
         limiteIntervalo = rand()%(22501 - 15000) + 15000;        
     }
     int Numero[limiteIntervalo];
-    int PhNumero[limiteIntervalo];
-    int i,j,aux;
-    size_t size = sizeof(Numero);
-    size_t elemtcount = size / sizeof(Numero[0]);
-    do
-    {
-cout << "Asignando valores al arreglo";
-    for (int i = 0; i < elemtcount; ++i) {
-        Numero[i] = rand() % 1000000000 + 1;
+    int PhNumero[limiteIntervalo];    
+        size_t size = sizeof(Numero);
+        size_t elemtcount = size / sizeof(Numero[0]);       
+    cout << "Seleccione el tipo de arreglo:\n1) Ordenado\n2) ordenado inverso\n3) Aleatorio\n4) Aleatorio con duplicados " << endl;
+    cin >> Change;
+    if(Change == 1){     
+        cout << "Asignando valores al arreglo en modo ordenado..." << endl;
+        for (int i = 0; i < elemtcount; ++i) {
+            Numero[i] = i;
+        }            
+    }
+    else if(Change == 2){     
+        cout << "Asignando valores al arreglo en modo ordenado inverso..." << endl;
+        for (int i = 0; i < elemtcount; ++i) {
+            Numero[i] = elemtcount - i;
+        } 
     }    
+    else if(Change == 3){     
+        cout << "Asignando valores al arreglo en modo aleatorio..." << endl;
+        for (int i = 0; i < elemtcount; ++i) {
+            Numero[i] = i;
+        }            
+        for (int i=0; i<(elemtcount/2); i++){
+        int x = rand()%elemtcount;
+        int y = rand()%elemtcount;
+        int temp = Numero[x];
+        Numero[x] = Numero[y];
+        Numero[y] = temp;  
+    }
+    }
+    else if(Change == 4){
+        size_t size = sizeof(Numero);
+        size_t elemtcount = size / sizeof(Numero[0]);        
+        cout << "Asignando valores al arreglo en modo aleatorio con duplicados..." << endl;
+        for (int i = 0; i < elemtcount; ++i) {
+            Numero[i] = rand() % 1000000000 + 1;
+        }            
+    }            
+    
     auto start = chrono::high_resolution_clock::now();
     auto end = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);    
@@ -288,7 +338,7 @@ cout << "Asignando valores al arreglo";
     copyArray(Numero,PhNumero,elemtcount);                                  
 
     start = chrono::high_resolution_clock::now();
-    quickSort(PhNumero,0, elemtcount-1);
+    quickSortIterative(PhNumero, 0 , elemtcount-1);
     end = chrono::high_resolution_clock::now();
     duration = chrono::duration_cast<chrono::microseconds>(end - start);
     cout << "\nTiempo transcurrido por quick Sort es " << duration.count() << " microseconds." << endl;
@@ -302,12 +352,6 @@ cout << "Asignando valores al arreglo";
         
     } while (loop);
     
-/*
-    /*cout<<"Ascendente: ";
-    for(i=0;i<elemtcount;i++)
-    {
-        cout << Numero[i] << " ";
-    }*/
-    
+
    
 }
