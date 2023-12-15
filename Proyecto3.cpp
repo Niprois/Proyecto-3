@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <unordered_set>
 #include <random>
+#include <vector>
 
 using namespace std;
 
@@ -221,6 +222,7 @@ void copyArray(const int source[], int destination[], int size) {
 }
 int main()
 { 
+    
     srand((time(NULL)));
     int loopead = 1;
     int select, Change;
@@ -252,54 +254,54 @@ int main()
     for (int i = 0; i < elemtcount; ++i) {
         Numero[i] = rand() % 1000000000 + 1;
     }    
-            auto start = chrono::high_resolution_clock::now();
-            auto end = chrono::high_resolution_clock::now();
-            auto duration = chrono::duration_cast<chrono::microseconds>(end - start);    
+    auto start = chrono::high_resolution_clock::now();
+    auto end = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::microseconds>(end - start);    
     copyArray(Numero,PhNumero,elemtcount);
 
-        cout << "Empezar carrera." << endl;
-        start = chrono::high_resolution_clock::now();
-        insertionSort(elemtcount,PhNumero);
-        end = chrono::high_resolution_clock::now();
-        duration = chrono::duration_cast<chrono::microseconds>(end - start);
-        cout << "\nTiempo transcurrido por insertion Sort es " << duration.count() << " microseconds." << endl;
-        copyArray(Numero,PhNumero,elemtcount);
+    cout << "Empezar carrera." << endl;
+    start = chrono::high_resolution_clock::now();
+    insertionSort(elemtcount,PhNumero);
+    end = chrono::high_resolution_clock::now();
+    duration = chrono::duration_cast<chrono::microseconds>(end - start);
+    
+    cout << "\nTiempo transcurrido por insertion Sort es " << duration.count() << " microseconds." << endl;
+    copyArray(Numero,PhNumero,elemtcount);
 
-        start = chrono::high_resolution_clock::now();
-        selectionSort(elemtcount,PhNumero);
-        end = chrono::high_resolution_clock::now();
-        duration = chrono::duration_cast<chrono::microseconds>(end - start);
-        cout << "\nTiempo transcurrido por selection Sort es " << duration.count() << " microseconds." << endl;
-        copyArray(Numero,PhNumero,elemtcount);
+    start = chrono::high_resolution_clock::now();
+    selectionSort(elemtcount,PhNumero);
+    end = chrono::high_resolution_clock::now();
+    duration = chrono::duration_cast<chrono::microseconds>(end - start);
+    cout << "\nTiempo transcurrido por selection Sort es " << duration.count() << " microseconds." << endl;
+    copyArray(Numero,PhNumero,elemtcount);
 
-        start = chrono::high_resolution_clock::now();
-        shellSort(elemtcount,PhNumero);
-        end = chrono::high_resolution_clock::now();
-        duration = chrono::duration_cast<chrono::microseconds>(end - start);
-        cout << "\nTiempo transcurrido por shell Sort es " << duration.count() << " microseconds." << endl;
-        copyArray(Numero,PhNumero,elemtcount);          
+    start = chrono::high_resolution_clock::now();
+    shellSort(elemtcount,PhNumero);
+    end = chrono::high_resolution_clock::now();
+    duration = chrono::duration_cast<chrono::microseconds>(end - start);
+    cout << "\nTiempo transcurrido por shell Sort es " << duration.count() << " microseconds." << endl;
+    copyArray(Numero,PhNumero,elemtcount);          
 
-        start = chrono::high_resolution_clock::now();
-        mergeSort(PhNumero,0, elemtcount-1);
-        end = chrono::high_resolution_clock::now();
-        duration = chrono::duration_cast<chrono::microseconds>(end - start);
-        cout << "\nTiempo transcurrido por merge Sort es " << duration.count() << " microseconds." << endl;
-        copyArray(Numero,PhNumero,elemtcount);                                  
+    start = chrono::high_resolution_clock::now();
+    mergeSort(PhNumero,0, elemtcount-1);
+    end = chrono::high_resolution_clock::now();
+    duration = chrono::duration_cast<chrono::microseconds>(end - start);
+    cout << "\nTiempo transcurrido por merge Sort es " << duration.count() << " microseconds." << endl;
+    copyArray(Numero,PhNumero,elemtcount);                                  
 
-        start = chrono::high_resolution_clock::now();
-        quickSort(PhNumero,0, elemtcount-1);
-        end = chrono::high_resolution_clock::now();
-        duration = chrono::duration_cast<chrono::microseconds>(end - start);
-        cout << "\nTiempo transcurrido por quick Sort es " << duration.count() << " microseconds." << endl;
-        copyArray(Numero,PhNumero,elemtcount);          
+    start = chrono::high_resolution_clock::now();
+    quickSort(PhNumero,0, elemtcount-1);
+    end = chrono::high_resolution_clock::now();
+    duration = chrono::duration_cast<chrono::microseconds>(end - start);
+    cout << "\nTiempo transcurrido por quick Sort es " << duration.count() << " microseconds." << endl;
+    copyArray(Numero,PhNumero,elemtcount);          
 
-        start = chrono::high_resolution_clock::now();
-        heapSort(PhNumero, elemtcount);
-        end = chrono::high_resolution_clock::now();
-        duration = chrono::duration_cast<chrono::microseconds>(end - start);
-        cout << "\nTiempo transcurrido por heap Sort es " << duration.count() << " microseconds." << endl;      
+    start = chrono::high_resolution_clock::now();
+    heapSort(PhNumero, elemtcount);
+    end = chrono::high_resolution_clock::now();
+    duration = chrono::duration_cast<chrono::microseconds>(end - start);
+    cout << "\nTiempo transcurrido por heap Sort es " << duration.count() << " microseconds." << endl;      
 
-          
 
     /*
     start = chrono::high_resolution_clock::now();
