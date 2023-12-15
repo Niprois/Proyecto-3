@@ -225,7 +225,7 @@ int main()
     
     srand((time(NULL)));
     int loopead = 1;
-    int select, Change;
+    int select, Change, loop;
     int limiteIntervalo = 0;
     cout << "Seleccione tamanio del arreglo: ";
     cin >> Change;
@@ -241,16 +241,14 @@ int main()
     }else {
         limiteIntervalo = rand()%(22501 - 15000) + 15000;        
     }
-    int carready;
     int Numero[limiteIntervalo];
     int PhNumero[limiteIntervalo];
     int i,j,aux;
     size_t size = sizeof(Numero);
     size_t elemtcount = size / sizeof(Numero[0]);
-
-    cout << "Tamanio de arreglo: " << elemtcount << endl;
-    // Generate and print random values for the array
-    cout << "Asignando valores al arreglo";
+    do
+    {
+cout << "Asignando valores al arreglo";
     for (int i = 0; i < elemtcount; ++i) {
         Numero[i] = rand() % 1000000000 + 1;
     }    
@@ -301,22 +299,9 @@ int main()
     end = chrono::high_resolution_clock::now();
     duration = chrono::duration_cast<chrono::microseconds>(end - start);
     cout << "\nTiempo transcurrido por heap Sort es " << duration.count() << " microseconds." << endl;      
-
-
-    /*
-    start = chrono::high_resolution_clock::now();
-    insertionSort(elemtcount,Numero);
-    end = chrono::high_resolution_clock::now();
-    duration = chrono::duration_cast<chrono::microseconds>(end - start);
+        
+    } while (loop);
     
-    cout << "\nTiempo transcurrido por Shell Sort es " << duration.count() << " microseconds." << endl;     
-
-    start = chrono::high_resolution_clock::now();
-    bubbleSort(elemtcount,Numero);
-    end = chrono::high_resolution_clock::now();
-    duration = chrono::duration_cast<chrono::microseconds>(end - start);
-    
-    cout << "\nTiempo transcurrido por Bubble Sort es " << duration.count() << " microseconds." << endl;     
 /*
     /*cout<<"Ascendente: ";
     for(i=0;i<elemtcount;i++)
