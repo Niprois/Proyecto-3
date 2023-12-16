@@ -70,15 +70,16 @@ void bubbleSort(int elemtcount, int Numero[]    ) {
 
 void shellSort(int elemtcount, int Numero[]){
     int n = elemtcount;
-    // Start with a large gap, then reduce the gap
+    // Empiza con un gap grande, y despues este se reduce
     for (int gap = n / 2; gap > 0; gap /= 2) {
-        
-        // Perform an insertion sort for elements at intervals of gap
+        // Realiza un insertion sort para elementos en intervalos del gap
         for (int i = gap; i < n; ++i) {
             int temp = Numero[i];
             int j;
 
             // Move elements of arr[0..i-gap] that are greater than temp
+            // Mueve elementos de arr[0..i-gap] que son mayores que temp
+            //
             // to positions ahead of their current position
             for (j = i; j >= gap && Numero[j - gap] > temp; j -= gap) {
                 Numero[j] = Numero[j - gap];
@@ -234,15 +235,19 @@ void copyArray(const int source[], int destination[], int size) {
 
 int main()
 { 
+    //------------------------------VARIABLES------------------------
     srand((time(NULL)));
     int loopead = 1;
     int select, Change, loop;
     int limiteIntervalo = 0;
     int i,j,aux;
+    //---------------------------MENU-DE-SELECCION---------------
     do{
-
+    //Toda la sección del menu, aqui es donde se decide que tamaño tiene el arreglo, y como seran sus valores(Ordenado, aleatorio, etc.)
     cout << "Seleccione tipo de carrera: \n1) Cola de espera (100.000 a 120.000)\n2) Trazabilidad de objetos (15.000 a 22.500)\n3) Eventos de cada escenario (60.000 a 80.000)\n4) Salir.";
     cin >> Change;
+    system("cls");
+    //Selección de tamaño de arreglo
     if (Change == 1)
     {
         cout << "Selecciono Cola de espera." << endl;
@@ -264,8 +269,10 @@ int main()
     }
     int Numero[limiteIntervalo];
     int PhNumero[limiteIntervalo];    
-        size_t size = sizeof(Numero);
-        size_t elemtcount = size / sizeof(Numero[0]);       
+    size_t size = sizeof(Numero);
+    size_t elemtcount = size / sizeof(Numero[0]);  
+         
+    //Selección de tipo de arreglo
     cout << "Seleccione el tipo de arreglo:\n1) Ordenado\n2) ordenado inverso\n3) Aleatorio\n4) Aleatorio con duplicados " << endl;
     cin >> Change;
     if(Change == 1){     
@@ -300,56 +307,81 @@ int main()
         for (int i = 0; i < elemtcount; ++i) {
             Numero[i] = rand() % 1000000000 + 1;
         }            
-    }            
-    
+    }
+    //-----------------------CARRERAS----------------------------                
+    //Declaración de variables de tiempo 
+    vector<pair<string, long long>> executionTimes;
     auto start = chrono::high_resolution_clock::now();
     auto end = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::microseconds>(end - start);    
-    copyArray(Numero,PhNumero,elemtcount);
 
-    cout << "Empezar carrera." << endl;
+    //Cada vez que se inicia un nuevo algoritmo, cada uno tiene que completar el mismo algoritmo (Hay 2 algoritmos, uno que guarda los valores
+    // y otro que toma dichos valores.)
+    copyArray(Numero,PhNumero,elemtcount);
+    cout << "Inicia la carrera!." << endl;
+    cout << "Insertion sort" << endl;    
     start = chrono::high_resolution_clock::now();
     insertionSort(elemtcount,PhNumero);
     end = chrono::high_resolution_clock::now();
     duration = chrono::duration_cast<chrono::microseconds>(end - start);
-    
-    cout << "\nTiempo transcurrido por insertion Sort es " << duration.count() << " microseconds." << endl;
-    copyArray(Numero,PhNumero,elemtcount);
+    executionTimes.push_back({"Insertion", duration.count()});    
 
+    copyArray(Numero,PhNumero,elemtcount);
+    cout << "Selection sort" << endl;
     start = chrono::high_resolution_clock::now();
     selectionSort(elemtcount,PhNumero);
     end = chrono::high_resolution_clock::now();
     duration = chrono::duration_cast<chrono::microseconds>(end - start);
-    cout << "\nTiempo transcurrido por selection Sort es " << duration.count() << " microseconds." << endl;
-    copyArray(Numero,PhNumero,elemtcount);
+    executionTimes.push_back({"Selection", duration.count()});     
 
+    copyArray(Numero,PhNumero,elemtcount);
+    cout << "Shell sort" << endl;
     start = chrono::high_resolution_clock::now();
     shellSort(elemtcount,PhNumero);
     end = chrono::high_resolution_clock::now();
     duration = chrono::duration_cast<chrono::microseconds>(end - start);
-    cout << "\nTiempo transcurrido por shell Sort es " << duration.count() << " microseconds." << endl;
-    copyArray(Numero,PhNumero,elemtcount);          
+    executionTimes.push_back({"Shell", duration.count()});     
 
+    copyArray(Numero,PhNumero,elemtcount);          
+    cout << "Merge sort" << endl;
     start = chrono::high_resolution_clock::now();
     mergeSort(PhNumero,0, elemtcount-1);
     end = chrono::high_resolution_clock::now();
     duration = chrono::duration_cast<chrono::microseconds>(end - start);
-    cout << "\nTiempo transcurrido por merge Sort es " << duration.count() << " microseconds." << endl;
-    copyArray(Numero,PhNumero,elemtcount);                                  
+    executionTimes.push_back({"Merge", duration.count()});     
 
+    copyArray(Numero,PhNumero,elemtcount);                                  
+    cout << "Quick sort" << endl;
     start = chrono::high_resolution_clock::now();
     quickSortIterative(PhNumero, 0 , elemtcount-1);
     end = chrono::high_resolution_clock::now();
     duration = chrono::duration_cast<chrono::microseconds>(end - start);
-    cout << "\nTiempo transcurrido por quick Sort es " << duration.count() << " microseconds." << endl;
-    copyArray(Numero,PhNumero,elemtcount);          
+    executionTimes.push_back({"Quick", duration.count()});     
 
+    copyArray(Numero,PhNumero,elemtcount);
+    cout << "Heap sort" << endl;
     start = chrono::high_resolution_clock::now();
     heapSort(PhNumero, elemtcount);
     end = chrono::high_resolution_clock::now();
     duration = chrono::duration_cast<chrono::microseconds>(end - start);
-    cout << "\nTiempo transcurrido por heap Sort es " << duration.count() << " microseconds." << endl;      
-        
+    executionTimes.push_back({"Heap", duration.count()});     
+
+    //Ordena los tiempos de menor a mayor
+    sort(executionTimes.begin(), executionTimes.end(),
+    [](const pair<string, long long>& a, const pair<string, long long>& b) {
+             return a.second < b.second;
+    });
+
+    // Muestra los tiempos de los algoritmos de forma ordenada
+    cout << "Tiempo de ejecucion ordenados:\n";
+    for (const auto& entry : executionTimes) {
+        cout << entry.first << ": " << entry.second << " microseconds\n";
+    }
+    // Muestra el algoritmo ganador
+    cout << "\nAlgoritmo ganador: " << executionTimes.front().first
+    << ", Tiempo: " << executionTimes.front().second << " microsegundos\n";    
+    system("pause");
+    system("cls");
     } while (loop);
     
 
