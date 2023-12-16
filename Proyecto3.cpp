@@ -9,19 +9,7 @@
 
 using namespace std;
 
-void checkAndChange(int elemCount, int Numero[]) {
-    
-    srand(time(0));
-
-    for (int i = 0; i < elemCount; ++i) {
-        for (int j = i + 1; j < elemCount; ++j) {
-            if (Numero[i] == Numero[j]) {
-
-            }
-        }
-    }
-}
-
+//-----------------------ALGORITMOS DE ORDENAMIENTO--------------------------
 
 void insertionSort(int elemtcount, int Numero[]){
     int i,pos,aux;
@@ -70,22 +58,20 @@ void bubbleSort(int elemtcount, int Numero[]    ) {
 
 void shellSort(int elemtcount, int Numero[]){
     int n = elemtcount;
-    // Empiza con un gap grande, y despues este se reduce
+    // Empieza con un gap grande, y despues este se reduce
     for (int gap = n / 2; gap > 0; gap /= 2) {
         // Realiza un insertion sort para elementos en intervalos del gap
         for (int i = gap; i < n; ++i) {
             int temp = Numero[i];
             int j;
 
-            // Move elements of arr[0..i-gap] that are greater than temp
             // Mueve elementos de arr[0..i-gap] que son mayores que temp
-            //
+            // a posiciones adelante de su posicion actual
             // to positions ahead of their current position
             for (j = i; j >= gap && Numero[j - gap] > temp; j -= gap) {
                 Numero[j] = Numero[j - gap];
             }
-
-            // Place temp (the original arr[i]) in its correct position
+            // Coloca temp (el original arr[i]) en su posición correcta
             Numero[j] = temp;
         }
     }
@@ -132,8 +118,6 @@ void merge(int Numero[], int left, int mid, int right) {
     }
 }
 
-//
-//
 void mergeSort(int arr[], int left, int right) {
     if (left < right) {
         int mid = left + (right - left) / 2;
@@ -307,6 +291,8 @@ int main()
         for (int i = 0; i < elemtcount; ++i) {
             Numero[i] = rand() % 1000000000 + 1;
         }            
+    }else{
+        Change = 1;
     }
     //-----------------------CARRERAS----------------------------                
     //Declaración de variables de tiempo 
@@ -383,7 +369,4 @@ int main()
     system("pause");
     system("cls");
     } while (loop);
-    
-
-   
 }
