@@ -1,5 +1,5 @@
 Programa creado por Alvaro Fuentes
-Fecha de entrega: 15-12-2023 a las 23:00 horas
+Fecha de entrega: 15-12-2023 a las 22:23 horas
 Curso: Algoritmos y estructuras de datos Sección A
 Profesor: Moscoso Dominguez Manuel Alejandro
 Enlace de video de youtube: https://www.youtube.com/watch?v=TuXph-9dULk
